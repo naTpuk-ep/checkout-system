@@ -10,7 +10,7 @@ import { CoreModule } from '../core/core.module';
     HeaderComponent
   ],
   imports: [
-    CoreModule
+    CoreModule,
   ]
 })
 export class LayoutModule { }

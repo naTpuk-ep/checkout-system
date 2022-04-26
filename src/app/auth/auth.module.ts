@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthComponent } from './auth.component';
-import { AuthGuard } from './auth.guard';
+import { AuthCanActivateGuard } from './auth-can-activate.guard';
 import { AuthService } from './auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LocalStorageService } from '../layout/services/local-storage.service';
+import { AuthComponentCanActivateGuardGuard } from './auth-component-can-activate.guard.guard';
 
 
 
@@ -16,8 +18,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
   ],
   providers: [
-    AuthGuard,
-    AuthService
+    AuthCanActivateGuard,
+    AuthComponentCanActivateGuardGuard,
+    AuthService,
+    LocalStorageService,
   ]
 })
 export class AuthModule {}

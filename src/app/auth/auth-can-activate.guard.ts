@@ -6,7 +6,7 @@ import { tap } from 'rxjs/operators';
 
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthCanActivateGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) {}
 
