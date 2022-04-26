@@ -13,7 +13,8 @@ import { AuthModule } from './auth/auth.module';
     AppRoutingModule,
     AuthModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

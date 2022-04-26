@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AuthComponent } from './auth.component';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -11,8 +12,12 @@ import { AuthService } from './auth.service';
     AuthComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule,
   ],
-  providers: [AuthGuard, AuthService]
+  providers: [
+    AuthGuard,
+    AuthService
+  ]
 })
 export class AuthModule {}
