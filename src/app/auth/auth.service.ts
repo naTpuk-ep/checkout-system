@@ -44,7 +44,7 @@ export class AuthService {
     });
   }
 
-  login(payload: ILoginPayload) {
+  private login(payload: ILoginPayload) {
     this.localStorageService.set(payload, AuthService.localStorageAuthKey)
     this.router.navigate(['']);
   }
