@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../auth/auth.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-product',
@@ -8,9 +8,8 @@ import { AuthService } from '../../../auth/auth.service';
 })
 export class ProductComponent implements OnInit {
 
-  constructor(public authService: AuthService) { }
+  constructor(private cartService: CartService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
 }
