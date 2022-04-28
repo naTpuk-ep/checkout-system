@@ -4,6 +4,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { CoreModule } from '../core/core.module';
 import { LayoutComponent } from './components/layout/layout.component';
 import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -14,7 +15,7 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     CoreModule,
-    RouterModule
+    RouterModule,
   ],
 })
 export class LayoutModule {}

@@ -5,19 +5,22 @@ import { SuccessComponent } from './components/success/success.component';
 import { CoreRoutingModule } from './core-routing.module';
 import { CommonModule } from '@angular/common';
 import { CartService } from './services/cart.service';
-
+import { QuantityComponent } from './components/product/quantity/quantity.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   imports: [
     CoreRoutingModule,
     CommonModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     ProductComponent,
     CheckoutComponent,
-    SuccessComponent
+    SuccessComponent,
+    QuantityComponent,
   ],
-  providers: [CartService]
+  // providers: [CartService],
 })
 export class CoreModule {}

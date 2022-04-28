@@ -1,1 +1,7 @@
-<p>Product works</p>
+<form [formGroup]="productFormGroup">
+  <app-product-quantity
+    [item]="product"
+    [formControl]="formControl"
+  ></app-product-quantity>
+  <button type="submit">Add to card</button>
+</form>
