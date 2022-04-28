@@ -23,6 +23,7 @@ export class AuthService {
 
   constructor(private router: Router, private localStorageService: LocalStorageService) {
     this.initPayload();
+    this.onPayloadChange();
   }
 
   whenLoggedIn(): Observable<boolean> {
@@ -33,13 +34,6 @@ export class AuthService {
 
   onSubmit(payload$: Observable<ILoginPayload>) {
     payload$.subscribe(this.payload$$);
-    this.payload$$.subscribe((payload) => {
-      if (this.verify(payload)) {
-        this.login(<ILoginPayload>payload);
-      } else {
-        this.logout();
-      }
-    });
   }
 
   private logout() {
@@ -55,6 +49,16 @@ export class AuthService {
   private initPayload() {
     this.payload$$ =
       new BehaviorSubject<ILoginPayload | null>(this.localStorageService.get(this.localStorageAuthKey));
+  }
+
+  private onPayloadChange() {
+    this.payload$$.subscribe((payload) => {
+      if (this.verify(payload)) {
+        this.login(<ILoginPayload>payload);
+      } else {
+        this.logout();
+      }
+    });
   }
 
   private verify(payload: ILoginPayload | null) {

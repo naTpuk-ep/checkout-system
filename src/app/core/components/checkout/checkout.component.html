@@ -26,7 +26,12 @@
     </div>
   </div>
   <div *ngIf="mode === 'view'" class="user-checkout-view">
-
+    <p><span>Email: </span>{{ formValue.email }}</p>
+    <p><span>Full Name: </span>{{ formValue.fullName }}</p>
+    <p><span>Address: </span>{{ formValue.address }}</p>
+    <p><span>Phone: </span>{{ formValue.phone }}</p>
+    <p><span>Credit Card: </span>{{ formValue.creditCard }}</p>
+    <p><span>CVV: </span>{{ formValue.cvv }}</p>
   </div>
   <button type="submit">Pay {{ totalPaymentAmount }}$</button>
 </form>

@@ -16,10 +16,11 @@ import { Subscription } from 'rxjs';
 export class CheckoutComponent implements OnInit, OnDestroy {
 
   totalPaymentAmount!: number
-  mode: 'edit' | 'view' = 'edit';
+  mode!: 'edit' | 'view';
   formGroup!: FormGroup;
   private fb = new FormBuilder();
   private submitSubscription!: Subscription;
+  private userCheckoutInfo!: IUserCheckoutInfo | null;
 
   constructor(
     private authService: AuthService,
@@ -28,10 +29,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.initUserCheckoutInfo();
     this.setTotalPaymentAmount();
     this.initFormGroup();
     this.patchFormGroup();
-    this.whenSubmitted();
+    this.setMode();
+    this.onSubmit();
   }
 
   ngOnDestroy() {
@@ -42,12 +45,24 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     return this.formGroup.value as IUserCheckoutInfo;
   }
 
+  private setMode() {
+    if (this.userCheckoutInfo) {
+      this.mode = 'view'
+    } else {
+      this.mode = 'edit';
+    }
+  }
+
+  private initUserCheckoutInfo() {
+    this.userCheckoutInfo = this.personalService.userCheckoutInfo$$.getValue();
+  }
+
   private setTotalPaymentAmount() {
     this.totalPaymentAmount = this.cartService.productList$$.getValue()
       .reduce((sum, product) => sum + product.price, 0);
   }
 
-  private whenSubmitted() {
+  private onSubmit() {
     this.submitSubscription = this.formGroup.valueChanges
       .pipe(
         filter(() => this.formGroup.valid)
@@ -56,9 +71,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   private patchFormGroup() {
-    const userInfo = this.personalService.userCheckoutInfo$$.getValue();
-    if (userInfo) {
-      this.formGroup.patchValue(userInfo);
+    if (this.userCheckoutInfo) {
+      this.formGroup.patchValue(this.userCheckoutInfo);
     }
   }
 
