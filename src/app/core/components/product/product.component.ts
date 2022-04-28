@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { CartService, IProduct } from '../../services/cart.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -9,35 +11,45 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./product.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit, OnDestroy {
 
   product: IProduct = {
     name: 'Product',
     description: 'short description',
     price: 40,
   };
-
-  fb = new FormBuilder();
   productFormGroup!: FormGroup;
+  private fb = new FormBuilder();
+  private submitSubscription!: Subscription;
 
-  productFormControl!: FormControl;
-
-  productList: IProduct[] = [];
-
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private router: Router) {}
 
   ngOnInit(): void {
     this.initProductFormGroup();
-    this.formControl.valueChanges.subscribe(this.cartService.productList$$);
+    this.whenFormSubmitted();
+  }
+
+  ngOnDestroy() {
+    this.submitSubscription.unsubscribe();
   }
 
   get formControl() {
     return this.productFormGroup.get('products') as FormControl;
   }
 
+  private whenFormSubmitted() {
+    this.submitSubscription = this.formControl.valueChanges.subscribe((list: IProduct[]) => {
+      this.cartService.productList$$.next(list);
+      this.router.navigate(['store/checkout']);
+    });
+  }
+
   private initProductFormGroup() {
     this.productFormGroup = this.fb.group({
-      products: [this.productList, { updateOn: 'submit' }],
+      products: [
+        this.cartService.productList$$.getValue(),
+        { updateOn: 'submit' },
+      ],
     });
   }
 }

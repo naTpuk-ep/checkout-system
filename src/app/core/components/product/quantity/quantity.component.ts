@@ -3,7 +3,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 
 @Component({
-  selector: 'app-product-quantity',
+  selector: 'app-quantity',
   templateUrl: './quantity.component.html',
   styleUrls: ['./quantity.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -18,12 +18,11 @@ const verificationLoginPayload: ILoginPayload = {
 @Injectable()
 export class AuthService {
 
-  private static localStorageAuthKey = 'auth';
-
+  private readonly localStorageAuthKey = 'checkout-auth';
   payload$$!: BehaviorSubject<ILoginPayload | null>;
 
   constructor(private router: Router, private localStorageService: LocalStorageService) {
-    this.initLoginPayload();
+    this.initPayload();
   }
 
   whenLoggedIn(): Observable<boolean> {
@@ -32,7 +31,7 @@ export class AuthService {
     );
   }
 
-  whenSubmit(payload$: Observable<ILoginPayload>) {
+  onSubmit(payload$: Observable<ILoginPayload>) {
     payload$.subscribe(this.payload$$);
     this.payload$$.subscribe((payload) => {
       if (this.verify(payload)) {
@@ -44,18 +43,18 @@ export class AuthService {
   }
 
   private logout() {
-    this.localStorageService.remove(AuthService.localStorageAuthKey);
+    this.localStorageService.remove(this.localStorageAuthKey);
     this.router.navigate(['auth']);
   }
 
   private login(payload: ILoginPayload) {
-    this.localStorageService.set(payload, AuthService.localStorageAuthKey);
+    this.localStorageService.set(payload, this.localStorageAuthKey);
     this.router.navigate(['']);
   }
 
-  private initLoginPayload() {
+  private initPayload() {
     this.payload$$ =
-      new BehaviorSubject<ILoginPayload | null>(this.localStorageService.get(AuthService.localStorageAuthKey));
+      new BehaviorSubject<ILoginPayload | null>(this.localStorageService.get(this.localStorageAuthKey));
   }
 
   private verify(payload: ILoginPayload | null) {

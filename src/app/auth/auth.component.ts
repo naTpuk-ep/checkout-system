@@ -10,18 +10,18 @@ import { AuthService, ILoginPayload } from './auth.service';
 })
 export class AuthComponent implements OnInit {
 
-  fb = new FormBuilder();
+  private fb = new FormBuilder();
   formGroup!: FormGroup;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.initFormGroup();
-    this.whenSubmit();
+    this.onSubmit();
   }
 
-  private whenSubmit() {
-    this.authService.whenSubmit(this.formGroup.valueChanges);
+  private onSubmit() {
+    this.authService.onSubmit(this.formGroup.valueChanges);
   }
 
   private initFormGroup() {
