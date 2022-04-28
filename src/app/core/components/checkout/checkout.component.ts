@@ -5,6 +5,7 @@ import { AuthService } from '../../../auth/auth.service';
 import { CartService } from '../../services/cart.service';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,32 +14,27 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./checkout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CheckoutComponent implements OnInit, OnDestroy {
+export class CheckoutComponent implements OnInit {
 
-  totalPaymentAmount!: number
+  totalPaymentAmount!: number;
   mode!: 'edit' | 'view';
   formGroup!: FormGroup;
   private fb = new FormBuilder();
-  private submitSubscription!: Subscription;
   private userCheckoutInfo!: IUserCheckoutInfo | null;
 
   constructor(
     private authService: AuthService,
     private cartService: CartService,
     private personalService: PersonalService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.initUserCheckoutInfo();
     this.setTotalPaymentAmount();
     this.initFormGroup();
-    this.patchFormGroup();
+    this.setFormGroupValue();
     this.setMode();
-    this.onSubmit();
-  }
-
-  ngOnDestroy() {
-    this.submitSubscription.unsubscribe();
   }
 
   get formValue() {
@@ -47,7 +43,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   private setMode() {
     if (this.userCheckoutInfo) {
-      this.mode = 'view'
+      this.mode = 'view';
     } else {
       this.mode = 'edit';
     }
@@ -62,17 +58,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       .reduce((sum, product) => sum + product.price, 0);
   }
 
-  private onSubmit() {
-    this.submitSubscription = this.formGroup.valueChanges
-      .pipe(
-        filter(() => this.formGroup.valid)
-      )
-      .subscribe(this.personalService.userCheckoutInfo$$);
+  submit() {
+    if (this.formGroup.valid) {
+      this.personalService.userCheckoutInfo$$.next(this.formValue);
+      this.cartService.productList$$.next([]);
+      this.router.navigate(['store/success']);
+    }
   }
 
-  private patchFormGroup() {
+  private setFormGroupValue() {
     if (this.userCheckoutInfo) {
-      this.formGroup.patchValue(this.userCheckoutInfo);
+      this.formGroup.setValue(this.userCheckoutInfo);
     }
   }
 
@@ -113,8 +109,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           Validators.maxLength(3),
         ],
       ],
-    }, {
-      updateOn: 'submit',
     });
   }
 }

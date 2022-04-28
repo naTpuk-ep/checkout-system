@@ -1,4 +1,4 @@
-<form [formGroup]="formGroup">
+<form (ngSubmit)="submit()" [formGroup]="formGroup">
   <div *ngIf="mode === 'edit'" class="user-checkout-edit">
     <div class="input-wrapper">
       <label for="email">Email</label>
@@ -6,7 +6,7 @@
     </div>
     <div class="input-wrapper">
       <label for="fullName">Full Name</label>
-      <input id="fullName" formControlName="fullName"type="text">
+      <input id="fullName" formControlName="fullName" type="text">
     </div>
     <div class="input-wrapper">
       <label for="address">Address</label>
@@ -28,7 +28,7 @@
   <div *ngIf="mode === 'view'" class="user-checkout-view">
     <p><span>Email: </span>{{ formValue.email }}</p>
     <p><span>Full Name: </span>{{ formValue.fullName }}</p>
-    <p><span>Address: </span>{{ formValue.address }}</p>
+    <p *ngIf="formValue.address"><span>Address: </span>{{ formValue.address }}</p>
     <p><span>Phone: </span>{{ formValue.phone }}</p>
     <p><span>Credit Card: </span>{{ formValue.creditCard }}</p>
     <p><span>CVV: </span>{{ formValue.cvv }}</p>

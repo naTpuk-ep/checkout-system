@@ -1,4 +1,4 @@
-<form [formGroup]="productFormGroup">
+<form (ngSubmit)="submit()" [formGroup]="productFormGroup">
   <app-quantity
     [item]="product"
     [formControl]="formControl"
