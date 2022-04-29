@@ -3,8 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IUserCheckoutInfo, PersonalService } from '../../services/personal.service';
 import { AuthService } from '../../../auth/auth.service';
 import { CartService } from '../../services/cart.service';
-import { filter } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
 
@@ -20,7 +18,7 @@ export class CheckoutComponent implements OnInit {
   mode!: 'edit' | 'view';
   formGroup!: FormGroup;
   private fb = new FormBuilder();
-  private userCheckoutInfo!: IUserCheckoutInfo | null;
+  private initialUserCheckoutInfo!: IUserCheckoutInfo | null;
 
   constructor(
     private authService: AuthService,
@@ -42,7 +40,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   private setMode() {
-    if (this.userCheckoutInfo) {
+    if (this.initialUserCheckoutInfo) {
       this.mode = 'view';
     } else {
       this.mode = 'edit';
@@ -50,7 +48,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   private initUserCheckoutInfo() {
-    this.userCheckoutInfo = this.personalService.userCheckoutInfo$$.getValue();
+    this.initialUserCheckoutInfo = this.personalService.userCheckoutInfo$$.getValue();
   }
 
   private setTotalPaymentAmount() {
@@ -60,15 +58,17 @@ export class CheckoutComponent implements OnInit {
 
   submit() {
     if (this.formGroup.valid) {
-      this.personalService.userCheckoutInfo$$.next(this.formValue);
+      if (this.mode === 'edit') {
+        this.personalService.userCheckoutInfo$$.next(this.formValue);
+      }
       this.cartService.productList$$.next([]);
       this.router.navigate(['store/success']);
     }
   }
 
   private setFormGroupValue() {
-    if (this.userCheckoutInfo) {
-      this.formGroup.setValue(this.userCheckoutInfo);
+    if (this.initialUserCheckoutInfo) {
+      this.formGroup.setValue(this.initialUserCheckoutInfo);
     }
   }
 

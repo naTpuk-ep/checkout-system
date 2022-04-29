@@ -3,7 +3,6 @@ import { CartService, IProduct } from '../../services/cart.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
 
 
 @Component({
@@ -41,8 +40,14 @@ export class ProductComponent implements OnInit, OnDestroy {
     return this.productFormGroup.get('products') as FormControl;
   }
 
+  get formValue() {
+    return this.formControl.value as IProduct[];
+  }
+
   submit() {
-    this.router.navigate(['store/checkout']);
+    if (this.formValue.length) {
+      this.router.navigate(['store/checkout']);
+    }
   }
 
   private onValueChanges() {

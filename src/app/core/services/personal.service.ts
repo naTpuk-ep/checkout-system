@@ -2,7 +2,7 @@ import { forwardRef, Injectable } from '@angular/core';
 import { CoreModule } from '../core.module';
 import { BehaviorSubject } from 'rxjs';
 import { LocalStorageService } from '../../layout/services/local-storage.service';
-import { filter } from 'rxjs/operators';
+import { distinctUntilChanged, filter, skip } from 'rxjs/operators';
 
 
 export interface IUserCheckoutInfo {
@@ -29,9 +29,12 @@ export class PersonalService {
 
   private onUserInfoChange() {
     this.userCheckoutInfo$$
-      .pipe(filter((userInfo) => !!userInfo))
+      .pipe(
+        skip(1),
+        filter((userInfo) => !!userInfo),
+      )
       .subscribe((userInfo) => {
-      this.localStorageService.set(userInfo, this.userLocalStorageKey);
+        this.localStorageService.set(userInfo, this.userLocalStorageKey);
     });
   }
 

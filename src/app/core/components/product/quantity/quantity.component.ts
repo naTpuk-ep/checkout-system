@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, Self } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  Optional,
+  Self,
+} from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 
@@ -12,20 +19,26 @@ export class QuantityComponent<T> implements ControlValueAccessor {
   @Input() item!: T;
 
   controlValue: T[] = [];
-  private onChange!: (_: T[]) => void;
+  private onChange?: (_: T[]) => void;
 
-  constructor(@Self() private ngControl: NgControl) {
-    this.ngControl.valueAccessor = this;
+  constructor(@Optional() @Self() private ngControl: NgControl) {
+    if (this.ngControl) {
+      this.ngControl.valueAccessor = this;
+    }
   }
 
   plusClick() {
     this.controlValue.push(this.item);
-    this.onChange([...this.controlValue]);
+    if (this.onChange) {
+      this.onChange([...this.controlValue]);
+    }
   }
 
   minusClick() {
     this.controlValue.pop();
-    this.onChange([...this.controlValue]);
+    if (this.onChange) {
+      this.onChange([...this.controlValue]);
+    }
   }
 
   writeValue(value: T[]) {
