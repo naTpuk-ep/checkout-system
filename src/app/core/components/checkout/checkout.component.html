@@ -18,11 +18,11 @@
     </div>
     <div class="input-wrapper">
       <label for="creditCard">Credit Card</label>
-      <input class="input" id="creditCard" formControlName="creditCard" type="text">
+      <input (input)="creditCardInput($event)" class="input" id="creditCard" formControlName="creditCard" type="text">
     </div>
     <div class="input-wrapper">
       <label for="cvv">CVV</label>
-      <input class="input" id="cvv" formControlName="cvv" type="password">
+      <input (input)="cvvInput($event)" class="input" id="cvv" formControlName="cvv" type="password">
     </div>
   </div>
   <button type="button" *ngIf="mode === 'view'" (click)="mode = 'edit'" class="btn-circle">edit</button>
@@ -31,8 +31,8 @@
     <p><span>Full Name: </span>{{ formValue.fullName }}</p>
     <p *ngIf="formValue.address"><span>Address: </span>{{ formValue.address }}</p>
     <p><span>Phone: </span>{{ formValue.phone }}</p>
-    <p><span>Credit Card: </span>{{ formValue.creditCard }}</p>
-    <p><span>CVV: </span>{{ formValue.cvv }}</p>
+    <p><span>Credit Card: </span>{{ creditCardMask }}</p>
+    <p><span>CVV: </span>***</p>
   </div>
-  <button class="btn-submit" type="submit">Pay {{ totalPaymentAmount }}$</button>
+  <button class="btn-submit" type="submit">Pay {{ totalPaymentAmount }} $</button>
 </form>

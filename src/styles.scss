@@ -2,7 +2,8 @@
 @import "styles/common";
 
 :root {
-  --background-color: #c4c4c4;
+  --background-color1: #c4c4c4;
+  --background-color0: #f0f0f0;
 }
 
 * {
@@ -28,7 +29,7 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active,
 input:-webkit-autofill:visited {
-  -webkit-box-shadow: 0 0 0 30px var(--background-color) inset !important;
+  -webkit-box-shadow: 0 0 0 30px var(--background-color1) inset !important;
 }
 
 input[type="color"],

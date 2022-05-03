@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckoutComponent implements OnInit {
 
@@ -39,6 +39,11 @@ export class CheckoutComponent implements OnInit {
     return this.formGroup.value as IUserCheckoutInfo;
   }
 
+  get creditCardMask() {
+    return `${this.formValue.creditCard}`
+      .replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, '$1 **** **** $4');
+  }
+
   submit() {
     if (this.formGroup.valid) {
       if (this.mode === 'edit') {
@@ -47,6 +52,24 @@ export class CheckoutComponent implements OnInit {
       this.cartService.productList$$.next([]);
       this.router.navigate(['store/success']);
     }
+  }
+
+  cvvInput(event: Event) {
+    const target = <HTMLInputElement>event.target;
+    if (`${target.value}`.length > 3) {
+      target.value = `${this.formValue.cvv}`
+    }
+    this.formGroup.patchValue({ cvv: +target.value || null });
+  }
+
+  creditCardInput(event: Event) {
+    const target = <HTMLInputElement>event.target;
+    target.value = target.value.replace(/\D/g, '');
+    if (`${target.value}`.length > 16) {
+      target.value = `${this.formValue.creditCard}`
+    }
+    this.formGroup.patchValue({ creditCard: target.value });
+    target.value = target.value.replace(/(\d{4})/g, '$1 ');
   }
 
   private initMode() {
@@ -102,13 +125,15 @@ export class CheckoutComponent implements OnInit {
         ],
       ],
       cvv: [
-        '',
+        null,
         [
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(3),
         ],
       ],
+    }, {
+      updateOn: 'submit',
     });
   }
 }
