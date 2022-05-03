@@ -1,2 +1,4 @@
-<button #exitBtn>exit</button>
-<span>Cart({{ (cartService.productList$$ | async)?.length }})</span>
+<div class="container">
+  <button #exitBtn>Exit</button>
+  <span>Cart ({{ (cartService.productList$$ | async)?.length }})</span>
+</div>

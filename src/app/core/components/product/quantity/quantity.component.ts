@@ -17,6 +17,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 })
 export class QuantityComponent<T> implements ControlValueAccessor {
   @Input() item!: T;
+  @Input() label!: string;
 
   controlValue: T[] = [];
   private onChange?: (_: T[]) => void;

@@ -1,6 +1,10 @@
 @import "~normalize.css";
 @import "styles/common";
 
+:root {
+  --background-color: #c4c4c4;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -12,6 +16,7 @@ h2 {
 html {
   font-family: 'Roboto', sans-serif;
   font-size: 14px !important;
+  overflow: hidden;
 }
 
 body {
@@ -23,7 +28,7 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active,
 input:-webkit-autofill:visited {
-  -webkit-box-shadow: 0 0 0 30px #c4c4c4 inset !important;
+  -webkit-box-shadow: 0 0 0 30px var(--background-color) inset !important;
 }
 
 input[type="color"],
@@ -52,9 +57,16 @@ button {
   background-color: #FFAA2B;
   border: none;
   cursor: pointer;
-  & .btn-circle {
+  &.btn-circle {
     border-radius: 50px;
     width: 24px;
     height: 24px;
   }
+}
+
+.container {
+  width: 100%;
+  max-width: 320px;
+  margin: auto;
+  padding: 0 .75rem;
 }

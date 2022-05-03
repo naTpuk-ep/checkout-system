@@ -1,0 +1,11 @@
+:host {
+  width: 100%;
+  display: block;
+  background-color: var(--background-color);
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

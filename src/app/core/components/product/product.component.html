@@ -1,7 +1,12 @@
+<h2 class="title">{{ product.name }}</h2>
+<div class="img"></div>
+<p class="description">{{ product.description }}</p>
+<p class="price">Price: {{ product.price }} $</p>
 <form (ngSubmit)="submit()" [formGroup]="productFormGroup">
   <app-quantity
+    label="Quantity: "
     [item]="product"
     [formControl]="formControl"
   ></app-quantity>
-  <button type="submit">Add to card</button>
+  <button class="btn-submit" type="submit">Add to cart</button>
 </form>
