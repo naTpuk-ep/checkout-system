@@ -1,3 +1,60 @@
-.input-wrapper {
+@import "~normalize.css";
+@import "styles/common";
 
+* {
+  box-sizing: border-box;
+}
+
+h2 {
+  margin: 0;
+}
+
+html {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px !important;
+}
+
+body {
+  height: 100vh;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+input:-webkit-autofill:visited {
+  -webkit-box-shadow: 0 0 0 30px #c4c4c4 inset !important;
+}
+
+input[type="color"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="month"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="time"],
+input[type="url"],
+input[type="week"],
+select:focus,
+textarea {
+  font-size: 14px !important;
+  outline: none !important;
+  border-radius: 0;
+}
+
+button {
+  height: 32px;
+  background-color: #FFAA2B;
+  border: none;
+  cursor: pointer;
+  & .btn-circle {
+    border-radius: 50px;
+    width: 24px;
+    height: 24px;
+  }
 }

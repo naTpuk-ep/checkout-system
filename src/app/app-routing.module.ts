@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
 import { AuthCanActivateGuard } from './auth/auth-can-activate.guard';
-import { AuthComponentCanActivateGuardGuard } from './auth/auth-component-can-activate.guard.guard';
+import { AuthComponentCanActivateGuard } from './auth/auth-component-can-activate.guard';
 
 const routes: Routes = [
   {
     path: 'auth',
     component: AuthComponent,
-    canActivate: [AuthComponentCanActivateGuardGuard],
+    canActivate: [AuthComponentCanActivateGuard],
   },
   {
     path: 'store',

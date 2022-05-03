@@ -9,7 +9,7 @@ import { map, tap } from 'rxjs/operators';
 
 
 @Injectable()
-export class AuthComponentCanActivateGuardGuard implements CanActivate {
+export class AuthComponentCanActivateGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) {}
 

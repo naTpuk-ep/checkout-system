@@ -4,7 +4,7 @@ import { AuthComponent } from './auth.component';
 import { AuthCanActivateGuard } from './auth-can-activate.guard';
 import { AuthService } from './auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthComponentCanActivateGuardGuard } from './auth-component-can-activate.guard.guard';
+import { AuthComponentCanActivateGuard } from './auth-component-can-activate.guard';
 
 
 
@@ -18,7 +18,7 @@ import { AuthComponentCanActivateGuardGuard } from './auth-component-can-activat
   ],
   providers: [
     AuthCanActivateGuard,
-    AuthComponentCanActivateGuardGuard,
+    AuthComponentCanActivateGuard,
     AuthService,
   ]
 })
