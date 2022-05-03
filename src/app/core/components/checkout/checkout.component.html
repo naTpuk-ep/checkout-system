@@ -2,29 +2,30 @@
   <div *ngIf="mode === 'edit'" class="user-checkout-edit">
     <div class="input-wrapper">
       <label for="email">Email</label>
-      <input id="email" formControlName="email" type="email">
+      <input class="input" id="email" formControlName="email" type="email">
     </div>
     <div class="input-wrapper">
       <label for="fullName">Full Name</label>
-      <input id="fullName" formControlName="fullName" type="text">
+      <input class="input" id="fullName" formControlName="fullName" type="text">
     </div>
     <div class="input-wrapper">
       <label for="address">Address</label>
-      <input id="address" formControlName="address" type="text">
+      <input class="input" id="address" formControlName="address" type="text">
     </div>
     <div class="input-wrapper">
       <label for="phone">Phone</label>
-      <input id="phone" formControlName="phone" type="tel">
+      <input class="input" id="phone" formControlName="phone" type="tel">
     </div>
     <div class="input-wrapper">
       <label for="creditCard">Credit Card</label>
-      <input id="creditCard" formControlName="creditCard" type="text">
+      <input class="input" id="creditCard" formControlName="creditCard" type="text">
     </div>
     <div class="input-wrapper">
       <label for="cvv">CVV</label>
-      <input id="cvv" formControlName="cvv" type="text">
+      <input class="input" id="cvv" formControlName="cvv" type="password">
     </div>
   </div>
+  <button type="button" *ngIf="mode === 'view'" (click)="mode = 'edit'" class="btn-circle">edit</button>
   <div *ngIf="mode === 'view'" class="user-checkout-view">
     <p><span>Email: </span>{{ formValue.email }}</p>
     <p><span>Full Name: </span>{{ formValue.fullName }}</p>
@@ -33,5 +34,5 @@
     <p><span>Credit Card: </span>{{ formValue.creditCard }}</p>
     <p><span>CVV: </span>{{ formValue.cvv }}</p>
   </div>
-  <button type="submit">Pay {{ totalPaymentAmount }}$</button>
+  <button class="btn-submit" type="submit">Pay {{ totalPaymentAmount }}$</button>
 </form>

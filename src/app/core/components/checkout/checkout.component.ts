@@ -32,14 +32,24 @@ export class CheckoutComponent implements OnInit {
     this.setTotalPaymentAmount();
     this.initFormGroup();
     this.setFormGroupValue();
-    this.setMode();
+    this.initMode();
   }
 
   get formValue() {
     return this.formGroup.value as IUserCheckoutInfo;
   }
 
-  private setMode() {
+  submit() {
+    if (this.formGroup.valid) {
+      if (this.mode === 'edit') {
+        this.personalService.userCheckoutInfo$$.next(this.formValue);
+      }
+      this.cartService.productList$$.next([]);
+      this.router.navigate(['store/success']);
+    }
+  }
+
+  private initMode() {
     if (this.initialUserCheckoutInfo) {
       this.mode = 'view';
     } else {
@@ -54,16 +64,6 @@ export class CheckoutComponent implements OnInit {
   private setTotalPaymentAmount() {
     this.totalPaymentAmount = this.cartService.productList$$.getValue()
       .reduce((sum, product) => sum + product.price, 0);
-  }
-
-  submit() {
-    if (this.formGroup.valid) {
-      if (this.mode === 'edit') {
-        this.personalService.userCheckoutInfo$$.next(this.formValue);
-      }
-      this.cartService.productList$$.next([]);
-      this.router.navigate(['store/success']);
-    }
   }
 
   private setFormGroupValue() {
